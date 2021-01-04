@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'login.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 
@@ -11,11 +12,12 @@ class introscreen extends StatefulWidget {
 }
 
 class _introscreen extends State<introscreen> {
+
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => HomePage()),
+      MaterialPageRoute(builder: (_) => login()),
     );
   }
 
@@ -28,21 +30,25 @@ class _introscreen extends State<introscreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color myHexColor = Colors.grey;
 
-    Backg
-    const bodyStyle = TextStyle(fontSize: 19.0);
+//    backgroundColor: Colors.green;
+    const bodyStyle = TextStyle(fontSize: 19.0,);
     const pageDecoration = const PageDecoration(
       titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
       bodyTextStyle: bodyStyle,
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      pageColor: Colors.white,
+//      pageColor: Colors.white,
+
       imagePadding: EdgeInsets.zero,
     );
 
     return IntroductionScreen(
+      globalBackgroundColor: myHexColor,
       key: introKey,
       pages: [
         PageViewModel(
+
           title: "Fractional shares",
           body:
           "Instead of having to buy an entire share, invest any amount you want.",
@@ -75,7 +81,9 @@ class _introscreen extends State<introscreen> {
               'FooButton',
               style: TextStyle(color: Colors.white),
             ),
-            color: Theme.of(context).primaryColor,
+            color: Theme
+                .of(context)
+                .primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
@@ -115,13 +123,27 @@ class _introscreen extends State<introscreen> {
     );
   }
 }
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: const Center(child: Text("This is the screen after Introduction")),
-    );
-  }
-}
+//  @override
+//  Widget build(BuildContext context) {
+//    return Scaffold(
+//
+//        body: Center(
+//            child: Container(
+//              decoration: BoxDecoration(
+//                  gradient: LinearGradient(
+//                      begin: Alignment.topRight,
+//                      end: Alignment.bottomLeft,
+//                      colors: [Colors.blue, Colors.red])),
+//              child: Center(
+//                child: Text(
+//                  'Hello Gradient!',
+//                  style: TextStyle(
+//                      fontSize: 48.0,
+//                      fontWeight: FontWeight.bold,
+//                      color: Colors.white),
+//                ),
+//              ),
+//            )));
+//  }
+//}
+//
