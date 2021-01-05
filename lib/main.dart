@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:productmanagement/introscreen.dart';
-
+import 'components/intro_screen.dart';
 import 'homescreen.dart';
 import 'login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(App());
+int initscreen;
+
+Future<void> main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  initscreen = await prefs.getInt('initscreen');
+  await prefs.setInt('initscreen', 1);
+  runApp(App());
+
+}
+
 
 class App extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -25,8 +37,11 @@ class App extends StatelessWidget {
       routes: {
         '/home': (context) => homescreen(),
         '/login': (context) => login(),
+        '/intro': (context) => IntroScreen(),
+
+
       },
-      home: introscreen(),
+      initialRoute: initscreen == 0 || initscreen == null ? '/intro': '/login',
     );
   }
 }
