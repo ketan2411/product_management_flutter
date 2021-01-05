@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
 import 'login.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -16,9 +14,7 @@ class _introscreen extends State<introscreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => login()),
-    );
+    Navigator.pushNamed(context, '/login');
   }
 
   Widget _buildImage(String assetName) {
@@ -30,21 +26,29 @@ class _introscreen extends State<introscreen> {
 
   @override
   Widget build(BuildContext context) {
-    Color myHexColor = Colors.grey;
 
-//    backgroundColor: Colors.green;
+
     const bodyStyle = TextStyle(fontSize: 19.0,);
     const pageDecoration = const PageDecoration(
       titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
       bodyTextStyle: bodyStyle,
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-//      pageColor: Colors.white,
+     pageColor: Colors.white12,
 
       imagePadding: EdgeInsets.zero,
     );
+    return Container(
+        height: 56.0, // in logical pixels
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    decoration: BoxDecoration(
+                 gradient: LinearGradient(
+                     begin: Alignment.topCenter,
+                     end: Alignment.bottomCenter,
+                     colors: [Colors.red, Colors.deepOrange, Colors.deepPurple])),
+        // Row is a horizontal, linear layout.
+        child: IntroductionScreen(
+          globalBackgroundColor: Colors.transparent,
 
-    return IntroductionScreen(
-      globalBackgroundColor: myHexColor,
       key: introKey,
       pages: [
         PageViewModel(
@@ -81,9 +85,7 @@ class _introscreen extends State<introscreen> {
               'FooButton',
               style: TextStyle(color: Colors.white),
             ),
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
@@ -120,9 +122,10 @@ class _introscreen extends State<introscreen> {
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
       ),
+    ),
     );
   }
-}
+
 //  @override
 //  Widget build(BuildContext context) {
 //    return Scaffold(
@@ -147,3 +150,4 @@ class _introscreen extends State<introscreen> {
 //  }
 //}
 //
+}
