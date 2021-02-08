@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:productmanagement/components/DraggableScrollableView.dart';
+import 'components/ListWheelScrollView.dart';
 import 'components/intro_screen.dart';
 import 'homescreen.dart';
 import 'login.dart';
@@ -40,6 +42,8 @@ class App extends StatelessWidget {
         '/login': (context) => login(),
         '/intro': (context) => IntroScreen(),
         '/dynamicList': (context) => dynamicList(),
+        '/DraggableScrollableView': (context) => DraggableScrollableView(),
+        '/WheelScrollView': (context) => WheelScrollView(),
 
       },
       initialRoute: initscreen == 0 || initscreen == null ? '/intro': '/login',

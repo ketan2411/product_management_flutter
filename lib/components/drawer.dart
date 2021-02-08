@@ -19,17 +19,15 @@ class drawer extends StatelessWidget{
             ),
           ),
           ListTile(
-            title: Text('Item 1'),
+            title: Text('Draggable Scrollable View'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+             Navigator.pushNamed(context, '/DraggableScrollableView');
             },
           ),
           ListTile(
-            title: Text('Item 2'),
+            title: Text('Wheel Scroll View'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.pushNamed(context, '/WheelScrollView');
             },
           ),
         ],
