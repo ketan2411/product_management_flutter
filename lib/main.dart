@@ -4,6 +4,7 @@ import 'components/intro_screen.dart';
 import 'homescreen.dart';
 import 'login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dynamicList.dart';
 
 int initscreen;
 
@@ -38,7 +39,7 @@ class App extends StatelessWidget {
         '/home': (context) => homescreen(),
         '/login': (context) => login(),
         '/intro': (context) => IntroScreen(),
-
+        '/dynamicList': (context) => dynamicList(),
 
       },
       initialRoute: initscreen == 0 || initscreen == null ? '/intro': '/login',
