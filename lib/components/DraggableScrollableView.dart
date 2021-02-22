@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class DraggableScrollableView extends StatefulWidget {
   @override
@@ -19,9 +20,18 @@ class DraggableScrollableViewState extends State<DraggableScrollableView> {
              color: Colors.blue[100],
              child: ListView.builder(
                controller: scrollController,
-               itemCount: 25,
+               itemCount: 15,
                itemBuilder: (BuildContext context, int index) {
-                 return ListTile(title: Text('Item $index'));
+                 return CheckboxListTile(
+                   title: const Text('Animate Slowly'),
+                   value: timeDilation != 1.0,
+                   onChanged: (bool value) {
+                     setState(() {
+                       timeDilation = value ? 1.5 : 1.0;
+                     });
+                   },
+                   secondary: const Icon(Icons.hourglass_empty),
+                 );
                },
              ),
            );

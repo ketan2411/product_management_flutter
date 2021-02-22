@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:loadmore/loadmore.dart';
@@ -7,13 +8,16 @@ class dynamicList extends StatefulWidget {
   @override
   dynamicListState createState() => dynamicListState();
 }
+class Mene{
 
+}
 class dynamicListState extends State<dynamicList> {
 
-
+  TransformationController Imagecontroller = TransformationController();
   ScrollController controller;
   Map valueMap ;
-  List userData ;
+  List userData =[];
+
   // int get count => userData.length;
 
   Future _getData() async {
@@ -62,7 +66,8 @@ class dynamicListState extends State<dynamicList> {
               onLoadMore:  () => _loadMore(valueMap['after']),
               child: ListView.builder(
                 controller: controller,
-                itemCount: userData.length,
+                // itemCount: userData.length,
+                itemCount: 15,
                 padding: const EdgeInsets.all(5.5),
                 // itemCount: userData == null ? 0 : userData.length,
                 itemBuilder: _itemBuilder,
@@ -90,11 +95,59 @@ class dynamicListState extends State<dynamicList> {
            ListTile(
             leading: Image.network("${userData[index]["data"]["thumbnail"]}"),
             title: Text("${userData[index]["data"]["title"]}"),
-            
+
             subtitle: Text('posted by/${userData[index]["data"]["author_fullname"]}'),
           ),
 
-          Image.network("${userData[index]["data"]["url_overridden_by_dest"]}"),
+          InteractiveViewer(
+            // transformationController: Imagecontroller,
+            maxScale: 2,
+            minScale: 1,
+            onInteractionEnd: (ScaleEndDetails endDetails){
+              Imagecontroller.value = Matrix4.identity();
+              setState(() {
+               print(endDetails);});
+            },
+
+            child: CachedNetworkImage(
+              imageUrl: "${userData[index]["data"]["url_overridden_by_dest"]}",
+              placeholder: _loader,
+              errorWidget: _error,
+            ),
+
+      //       CachedNetworkImage(
+      //         imageUrl: "${userData[index]["data"]["url_overridden_by_dest"]}",
+      //         imageBuilder: (context, imageProvider) => Container(
+      //           decoration: BoxDecoration(
+      //             image: DecorationImage(
+      //                 image: imageProvider,
+      //                 fit: BoxFit.cover,
+      //                 colorFilter:
+      //                 ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+      //           ),
+      //         ),
+      //         placeholder: (context, url) => Container(
+      //   height: 400,
+      //   color: Colors.black12,
+      //   child: Center(
+      //     child: CircularProgressIndicator(),
+      //   )
+      // ),
+      //         errorWidget: (context, url, error) => Icon(Icons.error),
+      //       ),
+            // Image.network("${userData[index]["data"]["url_overridden_by_dest"]}",
+            // loadingBuilder: (context, child, progress) {
+            //   return progress == null ? child : Container(
+            //     height: 400,
+            //     color: Colors.black12,
+            //     child: Center(
+            //       child: CircularProgressIndicator(),
+            //     )
+            //   );
+            //
+            // },
+            // ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -127,7 +180,16 @@ class dynamicListState extends State<dynamicList> {
 
     super.dispose();
   }
+  Widget _loader(BuildContext context, String url) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
 
+  Widget _error(BuildContext context, String url, dynamic error) {
+    print(error);
+    return const Center(child: Icon(Icons.error));
+  }
 
   Future<bool> _loadMore(String after) async {
     print("onLoadMore");
